@@ -12,16 +12,9 @@ module.exports = NodeHelper.create({
 
 
   socketNotificationReceived: function (notification, payload) {
-    switch (notification) {
-      case 'CONNECT_TO_SPOTIFY':
-        this.connector = new SpotifyConnector(payload);
+      if (notification == 'UPDATE_CURRENT_SONG') {
         this.retrieveCurrentSong();
-        break;
-
-      case 'UPDATE_CURRENT_SONG':
-        this.retrieveCurrentSong();
-        break;
-    }
+      }
   },
 
 
@@ -45,6 +38,7 @@ module.exports = NodeHelper.create({
     let payload = songInfo;
 
     if (!songInfo.noSong) {
+      // Need to get all this stuff from sonos instead of spotify
       payload = {
         imgURL: this.getImgURL(songInfo.item.album.images),
         songTitle: songInfo.item.name,

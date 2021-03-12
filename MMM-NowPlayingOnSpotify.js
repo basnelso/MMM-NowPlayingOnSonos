@@ -1,11 +1,11 @@
 'use strict';
 
-Module.register('MMM-NowPlayingOnSpotify', {
+Module.register('MMM-NowPlayingOnSonos', {
 
   // default values
   defaults: {
     // Module misc
-    name: 'MMM-NowPlayingOnSpotify',
+    name: 'MMM-NowPlayingOnSonos',
     hidden: false,
 
     // user definable
@@ -58,17 +58,7 @@ Module.register('MMM-NowPlayingOnSpotify', {
   },
 
   startFetchingLoop() {
-    // start immediately ...
-    let credentials = {
-      clientID: this.config.clientID,
-      clientSecret: this.config.clientSecret,
-      accessToken: this.config.accessToken,
-      refreshToken: this.config.refreshToken
-    };
-
-    this.sendSocketNotification('CONNECT_TO_SPOTIFY', credentials);
-
-    // ... and then repeat in the given interval
+    // Update current song every x seconds
     setInterval(() => {
       this.sendSocketNotification('UPDATE_CURRENT_SONG');
     }, this.config.updatesEvery * 1000);
