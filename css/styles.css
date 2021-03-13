@@ -17,6 +17,7 @@
 
 .NPOS_albumCover {
   width: 100%;
+  zoom: 50%;
 }
 
 .NPOS_nothingIsPlayingContent {

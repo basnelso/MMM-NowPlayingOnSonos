@@ -54,11 +54,9 @@ Module.register('MMM-NowPlayingOnSonos', {
           this.context = payload;
           this.updateDom();
         } else if (this.context.timeout > 60 * 10) { // 10 min
-          console.log("song timed out");
           this.context = {"noSong": true};
           this.updateDom();
         } else if (this.context != {}) {
-          console.log("song stopped playing");
           if (this.context.isPlaying) {
             this.context.isPlaying = false;
             this.updateDom();
