@@ -53,7 +53,7 @@ Module.register('MMM-NowPlayingOnSonos', {
           this.initialized = true;
           this.context = payload;
           this.updateDom();
-        } else if (this.context.timeout > 60 * 10) { // 10 min
+        } else if (this.context.timeout > 1 * 10) { // 10 min
           this.context = {"noSong": true};
           this.updateDom();
         } else if (this.context != {}) {

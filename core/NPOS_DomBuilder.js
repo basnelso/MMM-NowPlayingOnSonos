@@ -48,11 +48,11 @@ class NPOS_DomBuilder {
   }
 
   getLogoImage() {
-    return this.getImage('img/Spotify_Logo_RGB_White.png', 'NPOS_nothingIsPlayingImage');
+    return this.getImage('img/sonos-logo-transparent.png', 'NPOS_nothingIsPlayingImage');
   }
 
   getIconImage(className) {
-    return this.getImage('img/Spotify_Icon_RGB_White.png', className);
+    return this.getImage('img/sonos-icon.png', className);
   }
 
   getImage(imageName, className) {

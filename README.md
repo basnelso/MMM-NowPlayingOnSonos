@@ -23,8 +23,8 @@ In your MagicMirror directory:
 
 ```bash
 cd modules
-git clone https://github.com/raywo/MMM-NowPlayingOnSpotify.git
-cd MMM-NowPlayingOnSpotify
+git clone https://github.com/basnelso/MMM-NowPlayingOnSonos.git
+cd MMM-NowPlayingOnSonos
 npm install
 ```
 

@@ -1,31 +1,31 @@
 {
-  "name": "MMM-NowPlayingOnSpotify",
+  "name": "MMM-NowPlayingOnSonos",
   "version": "1.0.0",
-  "description": "A module for MagicMirror 2 displaying the currently playing song on Spotify.",
+  "description": "A module for MagicMirror 2 displaying the currently playing song on Sonos.",
   "repository": {
     "type": "git",
-    "url": "https://github.com/raywo/MMM-NowPlayingOnSpotify"
+    "url": "https://github.com/basnelso/MMM-NowPlayingOnSonos"
   },
   "keywords": [
     "magic mirror",
     "magic mirror 2",
     "smart mirror",
-    "spotify",
+    "sonos",
     "module"
   ],
   "author": {
-    "name": "raywo",
-    "email": "ray@skillbird.de",
-    "url": "https://github.com/raywo"
+    "name": "basnelso",
+    "email": "bs40404@gmail.com",
+    "url": "https://github.com/basnelso"
   },
   "contributors": [
-    "https://github.com/raywo/MMM-NowPlayingOnSpotify/graphs/contributors"
+    "https://github.com/basnelso/MMM-NowPlayingOnSonos/graphs/contributors"
   ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/raywo/MMM-NowPlayingOnSpotify/issues"
+    "url": "https://github.com/basnelso/MMM-NowPlayingOnSonos/issues"
   },
-  "homepage": "https://github.com/raywo/MMM-NowPlayingOnSpotify",
+  "homepage": "https://github.com/basnelso/MMM-NowPlayingOnSonos",
   "engines": {
     "node": ">=7"
   },
