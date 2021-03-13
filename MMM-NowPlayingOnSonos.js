@@ -2,15 +2,13 @@
 
 Module.register('MMM-NowPlayingOnSonos', {
 
-  // default values
   defaults: {
-    // Module misc
     name: 'MMM-NowPlayingOnSonos',
     hidden: false,
 
-    // user definable
     updatesEvery: 1,          // How often should the table be updated in s?
-    showCoverArt: true       // Do you want the cover art to be displayed?
+    showCoverArt: true,       // Do you want the cover art to be displayed?
+    serverIP: "http://localhost:5005"
   },
 
 
@@ -51,16 +49,31 @@ Module.register('MMM-NowPlayingOnSonos', {
   socketNotificationReceived: function (notification, payload) {
     switch (notification) {
       case 'RETRIEVED_SONG_DATA':
-        this.initialized = true;
-        this.context = payload;
-        this.updateDom();
+        if (payload != null) {
+          this.initialized = true;
+          this.context = payload;
+          this.updateDom();
+        } else if (this.context.timeout > 60 * 10) { // 10 min
+          console.log("song timed out");
+          this.context = {"noSong": true};
+          this.updateDom();
+        } else if (this.context != {}) {
+          console.log("song stopped playing");
+          if (this.context.isPlaying) {
+            this.context.isPlaying = false;
+            this.updateDom();
+          }
+          this.context.timeout += 1;
+        }
     }
   },
 
   startFetchingLoop() {
     // Update current song every x seconds
+    var self = this;
     setInterval(() => {
-      this.sendSocketNotification('UPDATE_CURRENT_SONG');
+      var url = self.config.serverIP + "/zones";
+      this.sendSocketNotification('UPDATE_CURRENT_SONG', url);
     }, this.config.updatesEvery * 1000);
   }
 });
