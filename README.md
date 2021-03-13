@@ -16,20 +16,16 @@ After installing the module and configuring and setting up the Spotify app the m
 To be able to display your currently playing song the module must connect to the Spotify service and query your private data. For obvious reasons this is not possible for arbitrary apps – or for that matter MagicMirror modules. There are third party solutions which will enable access to your Spotify data. This module is designed to be independent from third party services. Everything you need is in this module respectively is created by yourself.
 
 ## Screenshots
-| ![Screenshot when nothing is playing](img/readme/screenshot_nothing_playing.png) | ![Screenshot of a song playing without cover art](img/readme/screenshot_without_coverart.png) | ![Screenshot of a song playing with cover art](img/readme/screenshot_with_coverart.png) |
-|---|---|---|
-| Nothing is playing. | A song is playing and `showCoverArt` is set to `false`. | A song is playing and `showCoverArt` is set to `true`. |
+![Screenshot of a song playing with cover art](img/readme/screenshot_with_coverart.png)
 
 ## Preconditions
 
 * MagicMirror<sup>2</sup> instance
 * Node.js version >= 7
 * npm
-* a Spotify account
 
 
 ## Installing
-Installing the module is quite straight forward. Getting it to display your playing songs requires a bit more work.
 
 ### Step 1 – Install the module
 
@@ -42,22 +38,24 @@ cd MMM-NowPlayingOnSpotify
 npm install
 ```
 
-### Step 2 – Create and authorise a Spotify app
-In order to be able to connect to the Spotify API you need to create an app in the [Spotify developer area](https://beta.developer.spotify.com/dashboard/applications). Then you need to authorise the app to access your personal data. Et voilà!
+### Step 2 – Download, install, and run node-sonos-http-api
+In order for this module to connect to your local sonos system, you need to install the node-sonos-http-api program and get it to host on your local network.
 
-The module provides you with a special app which describes all the necessary steps and which guides you through the whole process. To use this app change into the `authorization` folder and start the app by typing `node app`. 
+In your home directory:
 
 ```bash
-cd authorization
-node app
+cd ~/
+git clone https://github.com/jishi/node-sonos-http-api.git
+cd node-sonos-http-api
+npm install
+
+pm2 start npm -- start
+pm2 save
+
+cd 
 ```
 
-When the app is running you can access it by opening `localhost:8888` in your browser. Provided you are doing this directly on your Raspberry Pi. If you want to access the app remotely just type the ip address or the name of your Raspberry like so for instance: `http://raspi:8888`. Then you should see the authorisation app like below.
-
-|![Screenshot for authorisation app](img/readme/screenshot_authorize_app.png)|
-|---|
-
-Now just follow the steps described there. After successful authorisation the app will display a code snippet under the heading **Step 3: Configure your mirror**. Copy that snippet and paste it into your mirror’s `config.js`. Configure the rest to your needs and you’re good to go.
+When the node-sonos-http-api app is running you can access it by opening `localhost:5005` in your browser. Provided you are doing this directly on your Raspberry Pi.
 
 
 ## Updating
@@ -75,7 +73,7 @@ npm install
 | Option | Description |
 |--------|-------------|
 | `updatesEvery` | <p>An integer determining the interval for display updates.</p><p>**Type:** `integer` **OPTIONAL**<br>**Example:** `5`<br>**Default Value:** `1`</p><p>**Note:** With the default setting the display is updated every second. So when you skip to the next song it is virtually immediately visible. Also the progress bar runs smoothly. If you increase the value you may relieve the strain on your Raspberry’s processor but your display will not be as up-to-date. </p> |
-| `serverIP` | <p>A string determining the interval for display updates.</p><p>**Type:** `integer` **OPTIONAL**<br>**Example:** `5`<br>**Default Value:** `1`</p><p>**Note:** With the default setting the display is updated every second. So when you skip to the next song it is virtually immediately visible. Also the progress bar runs smoothly. If you increase the value you may relieve the strain on your Raspberry’s processor but your display will not be as up-to-date. </p> |
+| `serverIP` | <p>A string representing the local adress that node-sonos-http-api is hosted on.</p><p>**Type:** `string` **OPTIONAL**<br>**Example:** `"http://localhost:1001"`<br>**Default Value:** `"http://localhost:5005"`</p><p>**Note:** If you just run node-sonos-http-api normally you should not have to change this value. </p> |
 
 Here is an example for an entry in `config.js`
 
