@@ -1,11 +1,9 @@
-# MMM-NowPlayingOnSpotify
+# MMM-NowPlayingOnSonos
 A module for the [MagicMirror](https://github.com/MichMich/MagicMirror) project by [Brady Snelson](https://github.com/basnelso) that displays the song currently playing on your Sonos System.
 Heavily uses DOM generating code from [Michael Teeuw](https://github.com/MichMich)'s project [MMM-NowPlayingOnSpotify](https://github.com/raywo/MMM-NowPlayingOnSpotify)
 
 ## How it works
-After installing the module and configuring and setting up the Spotify app the module displays the song you are currently listening to on Spotify. It shows on which of your devices you’re playing the song. If you like you can also display the album cover.
-
-To be able to display your currently playing song the module must connect to the Spotify service and query your private data. For obvious reasons this is not possible for arbitrary apps – or for that matter MagicMirror modules. There are third party solutions which will enable access to your Spotify data. This module is designed to be independent from third party services. Everything you need is in this module respectively is created by yourself.
+After installing the module and configuring and setting up the node-sonos-http-api app the module displays the song you are currently listening to on Sonos. It shows on which of your rooms is playing the song.
 
 ## Screenshots
 ![Screenshot of a song playing with cover art](img/readme/screenshot_with_coverart.png)
