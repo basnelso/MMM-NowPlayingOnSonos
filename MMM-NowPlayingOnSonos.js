@@ -6,9 +6,12 @@ Module.register('MMM-NowPlayingOnSonos', {
     name: 'MMM-NowPlayingOnSonos',
     hidden: false,
 
-    updatesEvery: 1,          // How often should the table be updated in s?
+    updateInterval: 1,          // How often should the table be updated in s?
     showCoverArt: true,       // Do you want the cover art to be displayed?
-    serverIP: "http://localhost:5005"
+    serverIP: "http://localhost:5005",
+
+    updateExternally: false,
+    broadcastStatus: true
   },
 
 
@@ -18,7 +21,10 @@ Module.register('MMM-NowPlayingOnSonos', {
     this.initialized = false;
     this.context = {};
 
-    this.startFetchingLoop();
+    this.getZoneData();
+    if (!this.updateExternally) {
+      this.scheduleUpdates();
+    }
   },
 
   getDom: function () {
@@ -46,32 +52,81 @@ Module.register('MMM-NowPlayingOnSonos', {
     ];
   },
 
-  socketNotificationReceived: function (notification, payload) {
-    switch (notification) {
-      case 'RETRIEVED_SONG_DATA':
-        if (payload != null) {
-          this.initialized = true;
-          this.context = payload;
-          this.updateDom();
-        } else if (this.context.timeout > 60 * 10) { // 10 min
-          this.context = {"noSong": true};
-          this.updateDom();
-        } else if (this.context != {}) {
-          if (this.context.isPlaying) {
-            this.context.isPlaying = false;
-            this.updateDom();
+  processZoneData: function(data) {
+    let track = this.createTrackObject(data);
+
+    if (track != null) { // Song is currently playing
+      this.initialized = true;
+      this.context = track;
+      this.updateDom();
+    } else if (this.context.timeout > (10 * 60 * 1000) / this.config.updateInterval) { // Song is paused, so check timeout to clear it if it exceed 10 min
+      this.context = {"noSong": true};
+      this.updateDom();
+    } else if (this.context != {}) { // Song is paused but hasn't timed out yet
+      if (this.context.isPlaying) {
+        this.context.isPlaying = false;
+        this.updateDom();
+      }
+      this.context.timeout += 1; // Increment timeout
+    }
+  },
+
+  createTrackObject: function (data) {
+    for (var i in data) {
+      var group = data[i];
+      var members = group.members;
+      for (var j in members) {
+          var member = members[j];
+          var state = member.state;
+          if (state.playbackState == "PLAYING") {
+            var track = state.currentTrack;
+            var songPayload = {
+              imgURL: "http://10.0.0.15:1400" + track.albumArtUri,
+              songTitle: track.title,
+              artist: track.artist,
+              album: track.album,
+              titleLength: track.duration,
+              progress: state.elapsedTime,
+              isPlaying: true,
+              deviceName: member.roomName,
+              timeout: 0
+            }
+            return songPayload;
           }
-          this.context.timeout += 1;
+      }
+    }
+
+    return null;
+  },
+
+  socketNotificationReceived: function (notification, payload) {
+    if (notification == 'SONOS_ZONE_DATA') {
+      if (this.config.broadcastStatus) {
+        this.sendNotification("SONOS_ZONE_DATA", payload);
+      }
+
+      this.processZoneData(payload);
+    }
+  },
+
+  notificationReceived: function(notification, payload) {
+    if (this.config.updateExternally) {
+        if (notification == "SONOS_ZONE_DATA") {
+          this.processZoneData(payload);
         }
     }
   },
 
-  startFetchingLoop() {
+  getZoneData: function() {
+    var url = this.config.serverIP + "/zones";
+    this.sendSocketNotification('GET_ZONE_DATA', url);
+  },
+
+  scheduleUpdates: function() {
     // Update current song every x seconds
     var self = this;
     setInterval(() => {
-      var url = self.config.serverIP + "/zones";
-      this.sendSocketNotification('UPDATE_CURRENT_SONG', url);
-    }, this.config.updatesEvery * 1000);
+      self.getZoneData();
+    }, this.config.updateInterval * 1000);
   }
 });
