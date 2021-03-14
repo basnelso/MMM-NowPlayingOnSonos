@@ -1,4 +1,9 @@
 
+.full-container {
+  width: 300px; 
+  margin: 5px;
+}
+
 .NPOS_initContent {
   background-image: url("../img/background_icon.png");
   display: table;
@@ -16,8 +21,18 @@
 }
 
 .NPOS_albumCover {
-  width: 100%;
+  width: 95%;
   zoom: 50%;
+  margin: 5px;
+  border-radius: 10px;
+}
+
+.NPOS_coverArtArea {
+  border: 2px solid;
+  border-radius: 10px;
+  border-color: rgb(93, 93, 93);
+  margin-bottom: 5px;
+  text-align: center;
 }
 
 .NPOS_nothingIsPlayingContent {

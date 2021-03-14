@@ -82,6 +82,7 @@ class NPOS_DomBuilder {
    */
   getPlayingContent(context) {
     let content = document.createElement('div');
+    content.className = "full-container";
 
     if (this.config.showCoverArt) {
       content.appendChild(this.getCoverArtDiv(context.imgURL));
