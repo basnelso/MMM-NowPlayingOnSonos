@@ -11,7 +11,9 @@ Module.register('MMM-NowPlayingOnSonos', {
     serverIP: "http://localhost:5005",
 
     updateExternally: false,
-    broadcastStatus: true
+    broadcastStatus: true,
+
+    timeout: 1 * 60
   },
 
 
@@ -59,7 +61,7 @@ Module.register('MMM-NowPlayingOnSonos', {
       this.initialized = true;
       this.context = track;
       this.updateDom();
-    } else if (this.context.timeout > (10 * 60 * 1000) / this.config.updateInterval) { // Song is paused, so check timeout to clear it if it exceed 10 min
+    } else if (this.context.timeout > this.config.timeout) { // Song is paused, so check timeout to clear it if it exceed 10 min
       this.context = {"noSong": true};
       this.updateDom();
     } else if (this.context != {}) { // Song is paused but hasn't timed out yet
