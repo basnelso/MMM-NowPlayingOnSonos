@@ -83,7 +83,7 @@ Module.register('MMM-NowPlayingOnSonos', {
           if (state.playbackState == "PLAYING") {
             var track = state.currentTrack;
             var songPayload = {
-              imgURL: "http://192.168.0.24:1400/" + track.albumArtUri,
+              imgURL: "http://192.168.0.24:1400" + track.albumArtUri,
               songTitle: track.title,
               artist: track.artist,
               album: track.album,
