@@ -93,6 +93,7 @@ Module.register('MMM-NowPlayingOnSonos', {
               deviceName: member.roomName,
               timeout: 0
             }
+            console.log('track is:', track)
             console.log('the image url is:', track.absoluteAlbumArtUri);
             return songPayload;
           }
