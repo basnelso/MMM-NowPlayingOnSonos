@@ -83,7 +83,7 @@ Module.register('MMM-NowPlayingOnSonos', {
           if (state.playbackState == "PLAYING") {
             var track = state.currentTrack;
             var songPayload = {
-              imgURL: track.absoluteAlbumArtUri,
+              imgURL: "http://192.168.0.24:1400/" + track.absoluteAlbumArtUri,
               songTitle: track.title,
               artist: track.artist,
               album: track.album,
@@ -93,8 +93,6 @@ Module.register('MMM-NowPlayingOnSonos', {
               deviceName: member.roomName,
               timeout: 0
             }
-            console.log('track is:', track)
-            console.log('the image url is:', track.absoluteAlbumArtUri);
             return songPayload;
           }
       }
