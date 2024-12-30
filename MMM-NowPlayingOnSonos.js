@@ -13,7 +13,9 @@ Module.register('MMM-NowPlayingOnSonos', {
     updateExternally: false,
     broadcastStatus: true,
 
-    timeout: 1 * 60
+    timeout: 1 * 60,
+
+    noDisplay: false
   },
 
 

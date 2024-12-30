@@ -7,10 +7,12 @@ class NPOS_DomBuilder {
   }
 
   getDom(context) {
-    if (context.noSong) {
-      return this.getWrapper(this.getNothingIsPlayingContent());
-    } else {
-      return this.getWrapper(this.getPlayingContent(context));
+    if (!this.config.noDisplay) {
+      if (context.noSong) {
+        return this.getWrapper(this.getNothingIsPlayingContent());
+      } else {
+        return this.getWrapper(this.getPlayingContent(context));
+      }
     }
   }
 
