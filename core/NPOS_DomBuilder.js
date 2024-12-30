@@ -7,7 +7,7 @@ class NPOS_DomBuilder {
   }
 
   getDom(context) {
-    if (!this.config.noDisplay) {
+    if (this.config.noDisplay) {
       if (context.noSong) {
         return this.getWrapper(this.getNothingIsPlayingContent());
       } else {
