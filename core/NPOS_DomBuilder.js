@@ -17,7 +17,9 @@ class NPOS_DomBuilder {
   }
 
   getInitDom(loadingText) {
-    return this.getWrapper(this.getInitializingContent(loadingText));
+    if (!this.config.noDisplay) {
+      return this.getWrapper(this.getInitializingContent(loadingText));
+    }
   }
 
   getWrapper(content) {
