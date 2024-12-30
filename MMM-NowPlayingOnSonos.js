@@ -34,7 +34,7 @@ Module.register('MMM-NowPlayingOnSonos', {
   getDom: function () {
     let domBuilder = new NPOS_DomBuilder(this.config, this.file(''));
 
-    if (this.initialized) {
+    if (this.initialized || this.config.noDisplay) {
       return domBuilder.getDom(this.context);
     } else {
       return domBuilder.getInitDom(this.translate('LOADING'));
